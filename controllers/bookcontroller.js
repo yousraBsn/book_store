@@ -24,15 +24,18 @@ exports.addBook = async (req, res) => {
 };
 
 
-// Lire tous les livres
+
+// Lire tous les livres avec leurs auteurs
 exports.getAllBooks = async (req, res) => {
     try {
-        const books = await Book.find();
+        // Récupérer les livres avec leurs auteurs
+        const books = await Book.find().populate("author"); // Ajout de la population pour obtenir les détails de l'auteur
         res.status(200).json(books);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 // Mettre à jour un livre
 exports.updateBook = async (req, res) => {
