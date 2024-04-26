@@ -55,6 +55,23 @@ exports.getAllBooks = async (req, res) => {
     }
 };
 
+// Lire tous les livres avec leurs auteurs et genres
+exports.booksByGenre = async (req, res) => {
+    try {
+        // Récupérer l'ID du genre depuis la requête
+        const genreId = req.params.genreId;
+
+        // Récupérer les livres avec leurs auteurs et genres filtrés par l'ID du genre
+        const books = await Book.find({ genre: genreId })
+            .populate("author", "name") // Récupérer le nom de l'auteur
+            .populate("genre", "categories"); // Récupérer la catégorie du genre
+
+        res.render('booksByGenre', { books });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 
 // Mettre à jour un livre
 exports.updateBook = async (req, res) => {

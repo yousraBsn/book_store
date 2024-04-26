@@ -4,10 +4,11 @@ const Genre = require("../models/genre"); // Importation du modèle de genre
 exports.addGenre = async (req, res) => {
     try {
         const { categories } = req.body;
-        
+        const image = req.file ? req.file.path : null;
         // Créer une nouvelle instance de genre
         const newGenre = new Genre({
             categories,
+            image
         });
 
         // Enregistrer le genre dans la base de données
@@ -26,12 +27,14 @@ exports.getAllGenres = async (req, res) => {
         // Récupérer tous les genres
         const genres = await Genre.find();
         
-        // Réponse avec la liste des genres
-        res.status(200).json(genres);
+        // Render the 'genre.ejs' view with the genres
+        res.render('index', { genres });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+
 
 // Mettre à jour un genre
 exports.updateGenre = async (req, res) => {

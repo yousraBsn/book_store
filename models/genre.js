@@ -7,6 +7,10 @@ const genreSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    image: {
+        type: String,
+        required: false,
+    },
 });
 
 // Middleware pour suppression en cascade

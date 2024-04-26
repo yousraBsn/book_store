@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Store</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="category-cards">
+        <% genres.forEach(genre => { %>
+            <div class="card">
+                <a href="/book/booksByGenre/<%= genre._id %>"> 
+                    <div class="card-body">
+                        <% if (genre.image) { %>
+                            <img src="/<%= genre.image %>" alt="Image du genre" class="card-img">
+                        <% } %>
+                    </div>
+                </a>
+                <!-- h3 n'est pas cliquable -->
+                <h3 class="card-title"><%= genre.categories %></h3>
+            </div>
+        <% }); %>
+    </div>
+                  
+      
+      
+</body>
+</html>
