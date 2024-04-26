@@ -45,6 +45,9 @@ const bookSchema = new mongoose.Schema({
         ref: "author", // Référence au modèle de l'auteur
         required: true,
     },
+    image: {
+        type: String 
+      }
 });
 
 module.exports = mongoose.model("book", bookSchema);

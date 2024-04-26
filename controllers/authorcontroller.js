@@ -20,25 +20,7 @@ exports.addAuthor = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-exports.add = async (req, res) => {
-    try {
-        const { name, bio } = req.body;
-        
-        // Créer une nouvelle instance d'auteur
-        const newAuthor = new Author({
-            name,
-            bio,
-        });
 
-        // Enregistrer l'auteur dans la base de données
-        await newAuthor.save();
-
-        // Envoyer un message de succès
-        res.status(201).json({ message: "L'auteur a été ajouté avec succès." });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
 
 // Lire tous les auteurs
 exports.getAllAuthors = async (req, res) => {

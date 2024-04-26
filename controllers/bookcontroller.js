@@ -1,23 +1,39 @@
 const Book = require('../models/book');
+const Author = require('../models/author'); // Importation du modèle d'auteur
+const Genre = require('../models/genre');
 
 exports.addBook = async (req, res) => {
     try {
-        const { title, author, ISBN, publicationDate, genre, price, stockQuantity } = req.body;
-        // Créer une nouvelle instance de livre
+        const { title, authorName, genreName, ISBN, publicationDate, price, stockQuantity } = req.body;
+        const image = req.file ? req.file.path : null;
+         // Recherche du genre par nom
+        const genre = await Genre.findOne({ categories: genreName });
+        if (!genre) {
+            return res.status(404).json({ message: "Genre non trouvé." });
+        }
+        // Recherche de l'auteur par nom
+        const author = await Author.findOne({ name: authorName });
+        if (!author) {
+            return res.status(404).json({ message: "Auteur non trouvé." });
+        }
+
+        // Créer le nouvel enregistrement de livre avec les ObjectIds trouvés
         const newBook = new Book({
             title,
-            author,
+            author: author._id, // Utilisez l'ObjectId de l'auteur
             ISBN,
             publicationDate,
-            genre,
+            genre: genre._id, // Utilisez l'ObjectId du genre
             price,
             stockQuantity,
-            image: "Chemin_de_l_image" // Ajouter le chemin de l'image à l'objet du livre si nécessaire
+            image
         });
-       // Enregistrer le livre dans la base de données
+
+        // Sauvegarder le nouveau livre
         await newBook.save();
-       // Envoyer un message de succès
-        res.status(201).json({ message: "Le livre a été ajouté avec succès." });
+
+        // Réponse de succès
+        res.status(201).json({ message: "Le livre a été ajouté avec succès.", book: newBook });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -25,12 +41,15 @@ exports.addBook = async (req, res) => {
 
 
 
-// Lire tous les livres avec leurs auteurs
+// Lire tous les livres avec leurs auteurs et genres
 exports.getAllBooks = async (req, res) => {
     try {
-        // Récupérer les livres avec leurs auteurs
-        const books = await Book.find().populate("author"); // Ajout de la population pour obtenir les détails de l'auteur
-        res.status(200).json(books);
+        // Récupérer les livres avec leurs auteurs et genres
+        const books = await Book.find()
+            .populate("author", "name") // Récupérer le nom de l'auteur
+            .populate("genre", "categories"); // Récupérer la catégorie du genre
+
+        res.status(200).json(books); // Renvoyer les livres avec les détails de l'auteur et du genre
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -80,16 +99,38 @@ exports.deleteBook = async (req, res) => {
 // Rechercher/filtrer les livres
 exports.searchBooks = async (req, res) => {
     try {
-        const { title, author, genre } = req.query;
+        const { title, authorName, genreName } = req.query;
 
-        // Construire l'objet de requête en fonction des critères fournis
+        // Construire l'objet de requête
         const query = {};
-        if (title) query.title = { $regex: title, $options: 'i' }; // Recherche de titre insensible à la casse
-        if (author) query.author = { $regex: author, $options: 'i' }; // Recherche d'auteur insensible à la casse
-        if (genre) query.genre = { $regex: genre, $options: 'i' }; // Recherche de genre insensible à la casse
+        
+        // Recherche de titre insensible à la casse
+        if (title) {
+            query.title = { $regex: title, $options: 'i' };
+        }
+
+        // Rechercher par nom d'auteur
+        if (authorName) {
+            const author = await Author.findOne({ name: { $regex: authorName, $options: 'i' } });
+            if (author) {
+                query.author = author._id;
+            } else {
+                return res.status(404).json({ message: "Auteur non trouvé." });
+            }
+        }
+
+        // Rechercher par nom de genre
+        if (genreName) {
+            const genre = await Genre.findOne({ categories: { $regex: genreName, $options: 'i' } });
+            if (genre) {
+                query.genre = genre._id;
+            } else {
+                return res.status(404).json({ message: "Genre non trouvé." });
+            }
+        }
 
         // Effectuer la recherche dans la base de données
-        const books = await Book.find(query);
+        const books = await Book.find(query).populate('author').populate('genre');
 
         res.status(200).json(books);
     } catch (error) {

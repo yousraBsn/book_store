@@ -1,9 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/bookcontroller');
+const multer = require('multer'); 
+
+// Configuration de multer pour le téléchargement de fichiers
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'image/'); // Définir le répertoire de destination pour enregistrer les fichiers
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname); // Utiliser le nom de fichier d'origine
+    }
+});
+
+const upload = multer({ storage: storage });
+
 
 // Route pour ajouter un livre avec une image
-router.post('/add', bookController.addBook);
+router.post('/add',upload.single("image"), bookController.addBook);
 // Route pour lire tous les livres
 router.get('/books', bookController.getAllBooks);
 
