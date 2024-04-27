@@ -3,6 +3,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/usermodel');
+const flash = require('connect-flash');
 
 async function signup(req, res) {
     try {
@@ -14,10 +15,9 @@ async function signup(req, res) {
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new User({ username, password: hashedPassword });
       await newUser.save();
-  
+      res.redirect('/client/getOrder');
       const token = jwt.sign({ userId: newUser._id, username: newUser.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
   
-      res.status(201).json({ message: 'User created successfully', token });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

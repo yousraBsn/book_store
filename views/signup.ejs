@@ -14,9 +14,9 @@
     <div class="form-container">
         <div class="wrapper">
           <div class="title">
-             Login Form
+             signup Form
           </div>
-          <form action="/auth/signin" method="POST">
+          <form action="/auth/signup" method="POST">
              <div class="field">
               <input type="text" id="email" name="username" value="<%= typeof username !== 'undefined' ? username : '' %>" required>
                 <label>User Name</label>
@@ -30,7 +30,7 @@
                 <input type="submit" value="Login">
              </div>
              <div class="signup-link">
-                Not a member? <a href="signup">Signup now</a>
+                Not a member? <a href="#">Signup now</a>
              </div>
           </form>
         </div>

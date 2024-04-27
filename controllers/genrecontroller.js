@@ -87,3 +87,31 @@ exports.deleteGenre = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+
+// Fonction pour filtrer les livres par catégorie
+exports.filterByCategory = async (req, res) => {
+  try {
+    const { category } = req.query; // Récupérer la catégorie du paramètre de requête
+
+    let books;
+    if (category && category !== "") {
+      // Rechercher les livres par catégorie
+      const genre = await Genre.findOne({ categories: category });
+      if (genre) {
+        books = await Book.find({ genre: genre._id }); // Obtenir les livres avec ce genre
+      } else {
+        return res.status(404).json({ message: "Category not found." });
+      }
+    } else {
+      // Si aucune catégorie n'est fournie, retourner tous les livres
+      books = await Book.find({});
+    }
+
+    // Renvoyer la liste des livres au client
+    res.render('books', { books }); // Rendu de la vue avec les livres
+  } catch (error) {
+    res.status(500).json({ message: "Error filtering by category.", error });
+  }
+};

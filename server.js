@@ -14,7 +14,10 @@ const authRoutes = require('./routes/userroute');
 const bookRoutes = require('./routes/bookroute'); 
 const authorRoutes = require('./routes/authorroute'); 
 const genreRoutes = require('./routes/genreroute'); 
-const clientRoutes = require('./routes/clientroute'); 
+const clientRoutes = require('./routes/clientroute');
+
+
+ 
 // Middleware
 app.use(express.json());
 app.use(express.static('public'))
@@ -30,6 +33,9 @@ app.use('/client', clientRoutes);
 
 app.get('/loginp', (req, res) => {
   res.render('login'); // Rediriger vers la page de connexion
+});
+app.get('/signup', (req, res) => {
+  res.render('signup'); // Rediriger vers la page de connexion
 });
 // MongoDB connection
 mongoose.connect(process.env.DATABASE_URL, {

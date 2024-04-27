@@ -55,6 +55,7 @@ exports.getAllBooks = async (req, res) => {
     }
 };
 
+
 exports.booksManager = async (req, res) => {
     try {
         // Récupérer les livres avec leurs auteurs et genres

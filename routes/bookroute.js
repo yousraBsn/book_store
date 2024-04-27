@@ -20,6 +20,7 @@ const upload = multer({ storage: storage });
 router.post('/add',upload.single("image"), bookController.addBook);
 // Route pour lire tous les livres
 router.get('/books', bookController.getAllBooks);
+
 router.get('/booksByGenre/:genreId', bookController.booksByGenre);
 router.get('/booksManager', bookController.booksManager);
 

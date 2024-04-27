@@ -27,5 +27,6 @@ router.post('/updateGenre/:id', genreController.updateGenre);
 
 // Supprimer un genre
 router.delete('/deleteGenre/:id', genreController.deleteGenre);
+router.get('/filterByCategory', genreController.filterByCategory); // Route avec un paramètre de requête
 
 module.exports = router;

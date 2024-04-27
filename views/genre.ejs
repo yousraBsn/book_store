@@ -4,27 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Store</title>
-  <!-- Link to external CSS file -->
+  <!-- Lien vers Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Lien vers votre CSS externe -->
   <link rel="stylesheet" href="/style.css">
+  <script>
+    // Fonction pour filtrer par catégorie
+    function filterByCategory() {
+      const selectedCategory = document.getElementById("category").value; // Obtenir la catégorie sélectionnée
+      const cards = document.querySelectorAll(".card"); // Récupérer toutes les cartes
+
+      cards.forEach(card => {
+        const category = card.querySelector(".card-title").textContent; // Obtenir la catégorie de la carte
+        if (selectedCategory === "" || category === selectedCategory) { // Afficher si correspond
+          card.style.display = "block";
+        } else { // Masquer si ne correspond pas
+          card.style.display = "none";
+        }
+      });
+    }
+  </script>
 </head>
 <body>
-    <div class="category-cards">
-        <% genres.forEach(genre => { %>
-            <div class="card">
-                <a href="/book/booksByGenre/<%= genre._id %>"> 
-                    <div class="card-body">
-                        <% if (genre.image) { %>
-                            <img src="/<%= genre.image %>" alt="Image du genre" class="card-img">
-                        <% } %>
-                    </div>
-                </a>
-                <!-- h3 n'est pas cliquable -->
-                <h3 class="card-title"><%= genre.categories %></h3>
-            </div>
+  <!-- Barre de filtre centrée -->
+  <div class="d-flex justify-content-center my-4"> <!-- Centrage horizontal -->
+    <div class="filter-form"> <!-- Container pour le formulaire -->
+      <label for="category" class="mr-2">Filter by Category:</label> <!-- Étiquette avec marge à droite -->
+      <select id="category" name="category" onchange="filterByCategory()" class="form-control"> <!-- Utilisation de Bootstrap -->
+        <option value="">All</option> <!-- Option pour tous -->
+        <% genres.forEach(genre => { %> <!-- Options pour chaque catégorie -->
+          <option value="<%= genre.categories %>"><%= genre.categories %></option>
         <% }); %>
+      </select>
     </div>
-                  
-      
-      
+  </div>
+
+  <!-- Afficher les genres -->
+  <div class="container"> <!-- Container Bootstrap -->
+    <div class="row"> <!-- Utilisation de la grille Bootstrap -->
+      <% genres.forEach(genre => { %> <!-- Boucle sur les genres -->
+        <div class="col-md-4"> <!-- Colonne de largeur 4 pour des grilles de 12 colonnes -->
+          <div class="card">
+            <a href="/book/booksByGenre/<%= genre._id %>"> <!-- Lien vers les livres par genre -->
+              <div class="card-body">
+                <% if (genre.image) { %> <!-- Afficher l'image si elle existe -->
+                  <img src="/<%= genre.image %>" alt="Image du genre" class="card-img">
+                <% } %>
+              </div>
+            </a>
+            <h3 class="card-title text-center"><%= genre.categories %></h3> <!-- Nom de la catégorie -->
+          </div>
+        </div>
+      <% }); %> <!-- Fin de la boucle -->
+    </div>
+  </div>
+
+  <!-- Lien vers Bootstrap JS et dépendances -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>
