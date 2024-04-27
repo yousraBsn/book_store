@@ -6,6 +6,6 @@ const clientController = require('../controllers/clientcontroller');
 
 router.put('/updateQt/:id', clientController.updateQt);
 router.post("/addClient", clientController.addClient);
-router.get('/order/:id', clientController.getOrder);
+router.get('/getOrder', clientController.getOrder);
 
 module.exports = router;

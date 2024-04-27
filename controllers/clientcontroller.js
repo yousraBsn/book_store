@@ -55,19 +55,14 @@ exports.addClient = async (req, res) => {
 
 exports.getOrder = async (req, res) => {
     try {
-        const { id } = req.params; // Obtenir l'identifiant de la commande à partir des paramètres de requête
+        // Fetch all orders and populate the reference fields (like id_book)
+        const orders = await Client.find().populate('id_book');
 
-        // Rechercher la commande par son ID et peupler les champs de référence (comme id_book)
-        const order = await Client.findById(id).populate('id_book');
-
-        if (!order) {
-            return res.status(404).json({ message: 'Commande non trouvée.' });
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ message: 'Aucune commande trouvée.' });
         }
 
-        res.status(200).json({
-            message: 'Commande trouvée avec succès.',
-            order, // Retourner les détails de la commande
-        });
+        res.render("manager/managerIndex", { orders });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

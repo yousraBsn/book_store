@@ -107,3 +107,88 @@ nav {
     background-color: #4682b4; /* Change la couleur au survol */
 }
 
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Use the full viewport height */
+  }
+
+.wrapper {
+   
+    max-width: 400px;
+    width: 100%;
+    padding: 40px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .field {
+    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  .field input {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .field input:focus {
+    border-color: #007bff;
+  }
+  
+  .field label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #777;
+    transition: top 0.3s ease, left 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .field input:focus + label,
+  .field input:valid + label {
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+    font-size: 14px;
+    color: #007bff;
+  }
+  
+  .field input:focus + label {
+    color: #007bff;
+  }
+  
+  .field input:valid {
+    border-color: #28a745;
+  }
+  
+  .signup-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .signup-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .signup-link a:hover {
+    text-decoration: underline;
+  }
+

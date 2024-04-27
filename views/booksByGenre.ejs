@@ -69,36 +69,50 @@
     
     <!-- Script JavaScript -->
     <script>
-     document.addEventListener("DOMContentLoaded", function() {
-  const buyForm = document.getElementById("buyForm");
+        document.addEventListener("DOMContentLoaded", function() {
+    const buyForm = document.getElementById("buyForm");
 
-  buyForm.addEventListener("submit", function(e) {
-    e.preventDefault();
+    buyForm.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    // Check if all required fields have values
-    if (!buyForm.checkValidity()) {
-      alert("Please fill in all required fields.");
-      return;
-    }
+        // Check if all required fields have values
+        if (!buyForm.checkValidity()) {
+            alert("Please fill in all required fields.");
+            return;
+        }
 
-    //const formData = new FormData(buyForm);
-    const formData = new FormData(event.target);
+        // Construct the data object manually
+        const formData = {
+            name: buyForm.querySelector('#name').value,
+            numeroCart: buyForm.querySelector('#numeroCart').value,
+            address: buyForm.querySelector('#address').value,
+            quantite: buyForm.querySelector('#quantite').value
+        };
 
-    fetch("/client/addClient", {
-      method: "POST",
-      body: formData,
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      alert(data.message);
-      $('#buyModal').modal('hide'); // Close the modal
-    })
-    .catch((error) => {
-      console.error("Error:", error);
+        fetch("/client/addClient", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message);
+            $('#buyModal').modal('hide'); // Close the modal
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
     });
-  });
 });
 
-    </script>
+        </script>
+        
 </body>
 </html>

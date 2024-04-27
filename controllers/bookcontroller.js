@@ -49,7 +49,7 @@ exports.getAllBooks = async (req, res) => {
             .populate("author", "name") // Récupérer le nom de l'auteur
             .populate("genre", "categories"); // Récupérer la catégorie du genre
 
-        res.status(200).json(books); // Renvoyer les livres avec les détails de l'auteur et du genre
+            res.render('books', { books });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

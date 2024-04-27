@@ -1,10 +1,22 @@
 <nav class="navbar">
     <div class="left-buttons">
-      <button>books</button>
-      <button>categories</button>
+        <button type="button" class="btn btn-primary" onclick="navigateToBooks()">View All Books</button>
+      <button type="button" class="btn btn-primary" onclick="navigateToGenres()">View All Genres</button>
+
     </div>
     <div class="nav-buttons">
       <!-- Your login button goes here -->
-      <button class="login-button">Login</button>
+      <button class="login-button" onclick="navigateToLogin()">Login</button>
     </div>
+    <script>
+        function navigateToGenres() {
+            window.location.href = "/genre/getAllGenres";
+        }
+        function navigateToBooks() {
+            window.location.href = "/book/books";
+        }
+        function navigateToLogin() {
+            window.location.href = "/loginp";
+        }
+    </script>
   </nav>  

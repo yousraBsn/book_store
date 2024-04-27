@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Store</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('nav.ejs') %>
+
+  <h1 class="big-title">helooooo yousri</h1>
+  <div class="category-cards">
+    <% orders.forEach(order => { %>
+        <div class="card">
+                
+            <!-- h3 n'est pas cliquable -->
+            <h3 class="card-title"><%= order.name %></h3>
+            <h3 class="card-title"><%= order.numeroCart %></h3>
+            <h3 class="card-title"><%= order.address %></h3>
+            <h3 class="card-title"><%= order.quantite %></h3>
+        </div>
+    <% }); %>
+</div>
+
+</body>
+</html>

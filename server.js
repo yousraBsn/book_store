@@ -27,6 +27,10 @@ app.use('/book', bookRoutes);
 app.use('/author', authorRoutes);
 app.use('/genre', genreRoutes);
 app.use('/client', clientRoutes);
+
+app.get('/loginp', (req, res) => {
+  res.render('login'); // Rediriger vers la page de connexion
+});
 // MongoDB connection
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,

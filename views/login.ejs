@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Store</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('nav.ejs') %>
+    
+    <div class="form-container">
+        <div class="wrapper">
+          <div class="title">
+             Login Form
+          </div>
+          <form action="/auth/signin" method="POST">
+             <div class="field">
+              <input type="text" id="email" name="username" value="<%= typeof username !== 'undefined' ? username : '' %>" required>
+                <label>Email Address</label>
+             </div>
+             <div class="field">
+                <input type="password" id="password" name="password" required>
+                <label>Password</label>
+             </div>
+             
+             <div class="field">
+                <input type="submit" value="Login">
+             </div>
+             <div class="signup-link">
+                Not a member? <a href="#">Signup now</a>
+             </div>
+          </form>
+        </div>
+      </div>
+
+</body>
+</html>
+
+
+
