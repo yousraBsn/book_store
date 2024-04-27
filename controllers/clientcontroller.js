@@ -67,3 +67,23 @@ exports.getOrder = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+// Route pour supprimer un client par ID
+
+exports.orderDelete=async (req, res) => {
+  try {
+    const {clientId} =req.body; // Récupérer l'ID du client de la route
+    const result = await Client.findByIdAndDelete(clientId); // Supprimer le client par ID
+
+    if (!result) {
+      return res.status(404).json({ message: "Client not found." });
+    }
+
+    res.status(200).json({ message: "Client deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting client.", error });
+  }
+};
+
+
