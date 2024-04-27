@@ -23,7 +23,7 @@ router.get('/getAllGenres', genreController.getAllGenres);
 router.get('/getAllGenresManager', genreController.getAllGenresManager);
 
 // Mettre à jour un genre
-router.put('/updateGenre/:id', genreController.updateGenre);
+router.post('/updateGenre/:id', genreController.updateGenre);
 
 // Supprimer un genre
 router.delete('/deleteGenre/:id', genreController.deleteGenre);

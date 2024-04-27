@@ -14,6 +14,12 @@
 
     <div class="container">
         <h1>Genre List</h1>
+        <form action="/genre/addGenre" method="POST" enctype="multipart/form-data" class="product-form-2">
+            <input type="text" name="categories" placeholder="Title" class="product-input">
+           
+            <input type="file" name="image" accept="image/*" class="product-input">
+            <button type="submit" class="button">Add product</button>
+          </form>
         <ul class="product-list">
           <% genres.forEach(genre => { %>
             <li class="product-item">
@@ -25,26 +31,46 @@
                   <h3 class="product-title"><%= genre.categories %></h3>
                 </div>
               </div>
-              <form action="/modify-action" method="POST" class="product-form">
-                <input type="text" name="title" value="<%= genre.categories %>" placeholder="title" class="product-input">
-                <button type="submit" class="button">Modify</button>
-                <!-- Use a div or span to wrap the delete button to keep them on the same line -->
-                <div>
-                  <form action="/delete-action" method="POST" class="product-form">
-                    <button type="submit" class="delete-button">Delete</button>
-                  </form>
+                <div> 
+          <form id="genreForm" action="/genre/updateGenre/<%= genre._id %>" method="POST" class="product-form">
+            <input type="text" name="categories" value="<%= genre.categories %>" placeholder="title" class="product-input">
+            <button type="submit" class="button">Modify</button>
+            <button type="button" class="delete-button" onclick="deleteGenre('<%= genre._id %>')">Delete</button>
+        </form>
                 </div>
-              </form>
+              
               
             </li>
           <% }); %>
+          
+        
+        
+        <script>
+            function deleteGenre(genreId) {
+                if (confirm("Are you sure you want to delete this genre?")) {
+                    fetch("/genre/deleteGenre/" + genreId, {
+                        method: "DELETE"
+                    })
+                    .then(response => {
+                        // Handle response as needed
+                        // For example, you could redirect after successful deletion
+                        if (response.ok) {
+                            window.location.reload;
+                        } else {
+                            // Handle error
+                            console.error("Error deleting genre");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error deleting genre:", error);
+                    });
+                }
+            }
+        </script>
+        
         </ul>
-        <form action="" method="POST" enctype="multipart/form-data" class="product-form-2">
-          <input type="text" name="title" placeholder="Title" class="product-input">
-         
-          <input type="file" name="image" accept="image/*" class="product-input">
-          <button type="submit" class="button">Add product</button>
-        </form>
+      
+       
 
 
 

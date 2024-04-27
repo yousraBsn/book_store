@@ -201,12 +201,14 @@ nav {
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: white;
+    margin: 0 auto; /* Center the card horizontally */
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    width: 80%; /* Adjust card width */
+    max-width: 700px; /* Reduce the maximum width of the card */
   }
+  
 
   .product-details {
     display: flex;
@@ -270,10 +272,23 @@ nav {
 }
 
 .product-form {
-  display: flex; /* Use flexbox to align items horizontally */
-  align-items: center; /* Center items vertically */
-}
-
+    display: flex; /* Use flexbox to align items horizontally */
+    align-items: center; /* Center items vertically */
+  }
+  
+  .container {
+    margin: 0 auto; /* Center the container horizontally */
+    text-align: center; /* Center the text content inside the container */
+  }
+  
+  .product-form-2 {
+    display: flex; /* Use flexbox to align items horizontally */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    margin-top: 20px; /* Add top margin to separate the form from the rest of the content */
+  }
+  
+  
 
   /* Error Message */
   .error-message {

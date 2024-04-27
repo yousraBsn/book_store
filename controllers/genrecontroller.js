@@ -15,7 +15,7 @@ exports.addGenre = async (req, res) => {
         await newGenre.save();
 
         // Envoyer un message de succès
-        res.status(201).json({ message: "Le genre a été ajouté avec succès." });
+        res.redirect('/genre/getAllGenresManager');
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -64,7 +64,7 @@ exports.updateGenre = async (req, res) => {
             return res.status(404).json({ message: "Genre non trouvé." });
         }
 
-        res.status(200).json({ message: "Le genre a été mis à jour avec succès.", genre: updatedGenre });
+        res.redirect('/genre/getAllGenresManager');
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

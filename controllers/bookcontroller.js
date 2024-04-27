@@ -32,8 +32,8 @@ exports.addBook = async (req, res) => {
         // Sauvegarder le nouveau livre
         await newBook.save();
 
-        // Réponse de succès
-        res.status(201).json({ message: "Le livre a été ajouté avec succès.", book: newBook });
+        
+        res.redirect('/book/booksManager');
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -55,6 +55,19 @@ exports.getAllBooks = async (req, res) => {
     }
 };
 
+exports.booksManager = async (req, res) => {
+    try {
+        // Récupérer les livres avec leurs auteurs et genres
+        const books = await Book.find()
+            .populate("author", "name") // Récupérer le nom de l'auteur
+            .populate("genre", "categories"); // Récupérer la catégorie du genre
+
+            res.render('manager/managerBook', { books });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Lire tous les livres avec leurs auteurs et genres
 exports.booksByGenre = async (req, res) => {
     try {
@@ -71,6 +84,8 @@ exports.booksByGenre = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
 
 
 // Mettre à jour un livre

@@ -21,10 +21,11 @@ router.post('/add',upload.single("image"), bookController.addBook);
 // Route pour lire tous les livres
 router.get('/books', bookController.getAllBooks);
 router.get('/booksByGenre/:genreId', bookController.booksByGenre);
+router.get('/booksManager', bookController.booksManager);
 
 
 // Route pour mettre à jour un livre
-router.put('/books/update', bookController.updateBook);
+router.post('/books/update', bookController.updateBook);
 
 // Route pour supprimer un livre
 router.delete('/books/delete', bookController.deleteBook);
