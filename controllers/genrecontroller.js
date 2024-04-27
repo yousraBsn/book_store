@@ -34,6 +34,17 @@ exports.getAllGenres = async (req, res) => {
     }
 };
 
+exports.getAllGenresManager = async (req, res) => {
+    try {
+        // Récupérer tous les genres
+        const genres = await Genre.find();
+        
+        // Render the 'genre.ejs' view with the genres
+        res.render('manager/managerGenre', { genres });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
 // Mettre à jour un genre

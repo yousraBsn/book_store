@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Store</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('nav.ejs') %>
+
+
+    <div class="container">
+        <h1>Genre List</h1>
+        <ul class="product-list">
+          <% genres.forEach(genre => { %>
+            <li class="product-item">
+              <div class="product-details">
+                <% if (genre.image) { %>
+                    <img src="/<%= genre.image %>" alt="Image du genre" class="product-image">
+                <% } %>
+                <div class="product-info">
+                  <h3 class="product-title"><%= genre.categories %></h3>
+                </div>
+              </div>
+              <form action="/modify-action" method="POST" class="product-form">
+                <input type="text" name="title" value="<%= genre.categories %>" placeholder="title" class="product-input">
+                <button type="submit" class="button">Modify</button>
+                <!-- Use a div or span to wrap the delete button to keep them on the same line -->
+                <div>
+                  <form action="/delete-action" method="POST" class="product-form">
+                    <button type="submit" class="delete-button">Delete</button>
+                  </form>
+                </div>
+              </form>
+              
+            </li>
+          <% }); %>
+        </ul>
+        <form action="" method="POST" enctype="multipart/form-data" class="product-form-2">
+          <input type="text" name="title" placeholder="Title" class="product-input">
+         
+          <input type="file" name="image" accept="image/*" class="product-input">
+          <button type="submit" class="button">Add product</button>
+        </form>
+
+
+
+
+</div>
+ 
+
+</body>
+</html>

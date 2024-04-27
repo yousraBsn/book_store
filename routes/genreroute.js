@@ -20,6 +20,7 @@ router.post('/addGenre',upload.single("image"), genreController.addGenre);
 
 // Obtenir tous les genres
 router.get('/getAllGenres', genreController.getAllGenres);
+router.get('/getAllGenresManager', genreController.getAllGenresManager);
 
 // Mettre à jour un genre
 router.put('/updateGenre/:id', genreController.updateGenre);
