@@ -310,9 +310,6 @@ color: black;
 
 }
 
-<<<<<<< Updated upstream
-=======
-
 /* General container style */
 .container2 {
   padding: 20px; /* Padding pour l'espace intérieur */
@@ -399,4 +396,3 @@ color: black;
 .btn-danger:hover {
   opacity: 0.85; /* Changer l'opacité au survol */
 }
->>>>>>> Stashed changes
