@@ -13,12 +13,12 @@
 
 
     <div class="container">
-        <h1>Genre List</h1>
+        <h1 class="big-title">Genre List</h1>
         <form action="/genre/addGenre" method="POST" enctype="multipart/form-data" class="product-form-2">
             <input type="text" name="categories" placeholder="Title" class="product-input">
            
             <input type="file" name="image" accept="image/*" class="product-input">
-            <button type="submit" class="button">Add product</button>
+            <button type="submit" class="button">Add Categorie</button>
           </form>
         <ul class="product-list">
           <% genres.forEach(genre => { %>
@@ -44,8 +44,7 @@
           <% }); %>
           
         
-        
-        <script>
+          <script>
             function deleteGenre(genreId) {
                 if (confirm("Are you sure you want to delete this genre?")) {
                     fetch("/genre/deleteGenre/" + genreId, {
@@ -55,7 +54,8 @@
                         // Handle response as needed
                         // For example, you could redirect after successful deletion
                         if (response.ok) {
-                            window.location.reload;
+                            console.log("Genre deleted successfully");
+                            window.location.reload();
                         } else {
                             // Handle error
                             console.error("Error deleting genre");
@@ -67,6 +67,7 @@
                 }
             }
         </script>
+        
         
         </ul>
       

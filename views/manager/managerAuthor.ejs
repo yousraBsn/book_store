@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Store</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%- include('nav.ejs') %>
+
+    <div class="container">
+        <h1 class="big-title">Authors List</h1>
+        <form id="addAuthorForm" class="product-form-2">
+          <input type="text" id="authorName" name="name" placeholder="Name" class="product-input" required>
+          <input type="text" id="authorBio" name="bio" placeholder="Bio" class="product-input" required>
+          <button type="submit" class="button">Add Author</button>
+        </form>
+
+        <ul class="product-list" id="authorList">
+          <% authors.forEach(author => { %>
+            <li class="product-item">
+              <div class="product-details">
+                <div class="product-info">
+                  <h3 class="product-title"><%= author.name %></h3>
+                  <p><%= author.bio %></p>
+                </div>
+              </div>
+              <div> 
+                <form id="updateForm_<%= author._id %>" class="product-form">
+                  <input type="text" name="name" value="<%= author.name %>" placeholder="Name" class="product-input">
+                  <input type="text" name="bio" value="<%= author.bio %>" placeholder="Bio" class="product-input">
+                  <button type="button" class="button" onclick="updateAuthor('<%= author._id %>')">Update</button>
+                  <button type="button" class="delete-button" onclick="deleteAuthor('<%= author._id %>')">Delete</button>
+                </form>
+              </div>
+            </li>
+          <% }); %>
+        </ul>
+    </div>
+
+<script>
+  function updateAuthor(authorId) {
+    const form = document.getElementById('updateForm_' + authorId);
+    const formData = new FormData(form);
+    const jsonData = {};
+    formData.forEach((value, key) => {
+      jsonData[key] = value;
+    });
+
+    fetch("/author/updateAuthor/" + authorId, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log("Author updated successfully");
+        window.location.reload();
+      } else {
+        console.error("Error updating author");
+      }
+    })
+    .catch(error => {
+      console.error("Error updating author:", error);
+    });
+  }
+
+  function deleteAuthor(authorId) {
+    if (confirm("Are you sure you want to delete this author?")) {
+      fetch("/author/deleteAuthor/" + authorId, {
+        method: "DELETE"
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log("Author deleted successfully");
+          window.location.reload();
+        } else {
+          console.error("Error deleting author");
+        }
+      })
+      .catch(error => {
+        console.error("Error deleting author:", error);
+      });
+    }
+  }
+
+  function addAuthor(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(document.getElementById('addAuthorForm'));
+    const jsonData = {};
+    formData.forEach((value, key) => {
+      jsonData[key] = value;
+    });
+
+    fetch('/author/addAuthor', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Author added successfully');
+        window.location.reload();
+      } else {
+        console.error('Error adding author');
+      }
+    })
+    .catch(error => {
+      console.error('Error adding author:', error);
+    });
+  }
+
+  document.getElementById('addAuthorForm').addEventListener('submit', addAuthor);
+</script>
+
+</body>
+</html>

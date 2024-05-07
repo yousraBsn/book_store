@@ -3,6 +3,7 @@ const Author = require("../models/author"); // Importation du modèle d'auteur
 // Ajouter un nouvel auteur
 exports.addAuthor = async (req, res) => {
     try {
+      
         const { name, bio } = req.body;
         
         // Créer une nouvelle instance d'auteur
@@ -15,6 +16,7 @@ exports.addAuthor = async (req, res) => {
         await newAuthor.save();
 
         // Envoyer un message de succès
+        // res.redirect('/author/getAllAuthors');
         res.status(201).json({ message: "L'auteur a été ajouté avec succès." });
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -29,7 +31,7 @@ exports.getAllAuthors = async (req, res) => {
         const authors = await Author.find();
         
         // Réponse avec la liste des auteurs
-        res.status(200).json(authors);
+        res.render("manager/managerAuthor", { authors });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
