@@ -34,6 +34,7 @@ app.use('/client', clientRoutes);
 app.get('/loginp', (req, res) => {
   res.render('login'); // Rediriger vers la page de connexion
 });
+
 app.get('/signup', (req, res) => {
   res.render('signup'); // Rediriger vers la page de connexion
 });

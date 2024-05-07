@@ -26,7 +26,7 @@ router.get('/booksManager', bookController.booksManager);
 
 
 // Route pour mettre à jour un livre
-router.post('/books/update', bookController.updateBook);
+router.post('/update', bookController.updateBook);
 
 // Route pour supprimer un livre
 router.delete('/books/delete', bookController.deleteBook);
