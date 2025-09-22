@@ -5,4 +5,3 @@ cd bookstore
 npm install
 npm start
 
-![Aperçu du projet](imageGenre/book_store.png)
